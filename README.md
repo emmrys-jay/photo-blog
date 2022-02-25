@@ -1,2 +1,2 @@
 # my-photo-blog
-My first full web project with DB using MySql using Amazon RDS as server.
+My first full web project with a MySql database runnning Amazon RDS as server.
