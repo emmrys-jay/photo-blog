@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Home</title>
+        <title>Sign In</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
@@ -19,7 +19,24 @@
                     </ul>
                 </div>
             </div>
-            <div class="pics"></div>
+            <div class="midder">
+                <div class="write-up">
+                    Spread your personality through visuals <br>
+                    Sign In to add pictures you love <br>
+                </div>
+                <div class="form-pos">
+                    <form class="form" method="post">
+                        <label for="uname">Username:</label>
+                        <input type="text" id="uname" name="username"><br>
+                        <label for="password">Password:</label>
+                        <input type="text" id="pswrd" name="password"><br>
+                        <input type="submit" value="Submit">
+                    </form>
+                    <div>
+                        Don't have an account yet? <button><a href="/signup">Sign Up</a></button>
+                    </div>
+                </div>
+            </div>
             <div class="footer">
                 <div class="quote">
                     {{.}}

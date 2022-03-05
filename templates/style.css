@@ -4,10 +4,14 @@ body {
     height: 100vh;
 }
 
+label {
+    display: inline-block;
+    width: 100px;
+}
+
 .body {
     display: flex;
     flex-direction: column;
-    gap: 300px;
     justify-content: space-between;
 }
 
@@ -37,5 +41,19 @@ a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.midder {
+    display: flex;
+    height: 600px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.form-pos {
+    border: 20px;
+    border-radius: 3px;
+    border-color: black;
+    margin: 20px;
 }
 

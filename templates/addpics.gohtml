@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Add Pictures</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="body">
+            <div class="header"> 
+                <div class="logo-pos">
+                    <a href="/">My Photo Blog</a>
+                </div>
+                <div class="other-links">
+                    <ul>
+                        <li><a href="/signup">Sign Up</a></li>
+                        <li><a href="/signin">Sign In</a></li>
+                        <li> <a href="/add">Add Pictures</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="midder">
+                <div class="write-up">
+                    Building.... <br>
+                    You're creating your pic-folio <br>
+                    Your pictures speak about you! <br>
+                </div>
+                <div class="form-pos">
+                    <form class="form" method="post" enctype="multipart/form-data">
+                        <label for="pname">Picture name:</label>
+                        <input type="text" id="pname" name="picname"><br>
+                        <label for="desc">Description:</label>
+                        <input type="text" id="desc" name="desc"><br>
+                        <label for="pic">Add Picture: </label>
+                        <input type="file" id="pic" name="pic" multiple><br>
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="quote">
+                    {{.}}
+                </div>
+                <div class="copyright">
+                    Copyright @Emmrys
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
