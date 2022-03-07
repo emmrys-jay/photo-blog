@@ -46,7 +46,7 @@ CREATE TABLE photob (
     uname VARCHAR(20),
     ptitle VARCHAR(20),
     photo MEDIUMBLOB NOT NULL,
-    descp VARCHAR(1024),
+    descp VARCHAR(1024), //desc is a keyword in mysql
     PRIMARY KEY(ptitle, uname),
     FOREIGN KEY(uname) REFERENCES userspb(uname) ON DELETE CASCADE
 );
