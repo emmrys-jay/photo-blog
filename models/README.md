@@ -1,4 +1,4 @@
-Database Details
+***Database Details***
 
 Type: MySql
 Server: Amazon RDS server
@@ -40,18 +40,20 @@ CREATE TABLE userspb (
 ptitle VARCHAR(20) PRIMARY KEY
 uname VARCHAR(10) PRIMARY KEY REFERENCE userspb(uname)
 desc VARCHAR(100)
-photo BLOB
+photo VARCHAR(30)
 
 CREATE TABLE photob (
     uname VARCHAR(20),
     ptitle VARCHAR(20),
-    photo MEDIUMBLOB NOT NULL,
+    photo VARCHAR(30) NOT NULL,
     descp VARCHAR(1024), //desc is a keyword in mysql
     PRIMARY KEY(ptitle, uname),
     FOREIGN KEY(uname) REFERENCES userspb(uname) ON DELETE CASCADE
 );
 
 Bad Practice: Storing pictures on a database, i had to store it though just for this.... lol
+
+I had to store the filepath of each picture instead of storing the images with blob in the database. I couldn't find enough resources to help me with using golang to save images in mysql blob data-type.
 
 ON DELETE SET NULL ??
 ON DELETE CASCADE ??
