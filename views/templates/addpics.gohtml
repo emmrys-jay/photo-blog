@@ -3,7 +3,6 @@
     <head>
         <meta charset="utf-8">
         <title>Add Pictures</title>
-        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <div class="body">
@@ -47,6 +46,16 @@
                 </div>
             </div>
         </div>
+        
+        {{if .}}
+            {{$reply = ""}}
+            {{$reply = . | a1}}
+                <script>
+                    {{if $reply = "Picture Added"}}
+                        alert("Picture Added")
+                    {{end}}
+                </script>
+        {{end}}
 
         <style>
             body {
