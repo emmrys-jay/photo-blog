@@ -22,6 +22,7 @@ label {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
+    height: 100px;
 }
 
 ul {
@@ -40,7 +41,8 @@ a {
     background-color: #ffee00c7;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    height: 100px;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -49,7 +51,7 @@ a {
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
-    flex: 1;
+    flex: 1 0 auto;
 }
 
 .form-pos {
@@ -78,4 +80,16 @@ img {
 
 .img {
     text-align: center;
+}
+
+.quote {
+    display: flex;
+    flex-direction: column;
+    font-weight: 700px;
+    justify-content: right;
+}
+
+.author {
+    text-align: right;
+    text-decoration: wavy;
 }
