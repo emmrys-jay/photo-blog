@@ -43,13 +43,18 @@ desc VARCHAR(100)
 photo VARCHAR(30)
 
 CREATE TABLE photob (
+    id INT AUTO_INCREMENT,
     uname VARCHAR(20),
     ptitle VARCHAR(20),
-    photo VARCHAR(30) NOT NULL,
-    descp VARCHAR(1024), //desc is a keyword in mysql
+    photo VARCHAR(100) NOT NULL,
+    descp VARCHAR(1024) DEFAULT NULL, 
     PRIMARY KEY(ptitle, uname),
     FOREIGN KEY(uname) REFERENCES userspb(uname) ON DELETE CASCADE
 );
+
+//primary keys cannot be NULL
+
+//desc is a keyword in mysql
 
 Bad Practice: Storing pictures on a database, i had to store it though just for this.... lol
 
