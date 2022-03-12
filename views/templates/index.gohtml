@@ -8,23 +8,42 @@
         <div class="body">
             <div class="header"> 
                 <div class="logo-pos">
-                    <a href="/">My Photo Blog</a>
+                    <a href="/view"><b>My Photo Blog</b></a>
                 </div>
                 <div class="other-links">
                     <ul>
-                        <li><a href="/signup">Sign Up</a></li>
-                        <li><a href="/signin">Sign In</a></li>
-                        <li> <a href="/add">Add Pictures</a></li>
-                        <li> <a href="/logout">Sign Out</a></li>
+                        <li><a href="/signup"><b>Sign Up</b></a></li>
+                        <li><a href="/signin"><b>Sign In</b></a></li>
+                        <li> <a href="/add"><b>Add Pictures</b></a></li>
+                        <li> <a href="/logout"><b>Sign Out</b></a></li>
                     </ul>
                 </div>
             </div>
+            {{if .}}
             <div class="midder">
-                
+                {{range .}} 
+                <div class="picpos">
+                    <div class="img">
+                    <img src="{{.Photop}}">
+                    </div>
+                    <div class="picinfo">    
+                    <b> Title:</b>{{.Pname}} <br>
+                    <b> Description:</b> {{.Desc}} <br>
+                    <h6>Author: {{.Uname}} <h6>
+                    </div>
+                </div>
+                {{end}}
             </div>
+            {{end}}
+
             <div class="footer">
                 <div class="quote">
-                    {{.}}
+                    <div>
+                        <b>“It has become appallingly obvious that our technology has exceeded our humanity.”</b>
+                    </div>
+                    <div class="author">
+                        <em>- Albert Einstein, Scientist</em>
+                    </div>
                 </div>
                 <div class="copyright">
                     Copyright @Emmrys
@@ -47,7 +66,8 @@
             .body {
                 display: flex;
                 flex-direction: column;
-                justify-content: space-between;
+                justify-content: space-evenly;
+
             }
 
             .header {
@@ -56,6 +76,7 @@
                 justify-content: space-between;
                 align-items: center;
                 padding: 0 20px;
+                height: 100px;
             }
 
             ul {
@@ -74,15 +95,17 @@
                 background-color: #ffee00c7;
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
+                height: 100px;
+                justify-content: space-evenly;
                 align-items: center;
             }
 
             .midder {
                 display: flex;
-                height: 600px;
+                flex-wrap: wrap;
                 justify-content: space-evenly;
                 align-items: center;
+                flex: 1 0 auto;
             }
 
             .form-pos {
@@ -92,7 +115,38 @@
                 margin: 20px;
             }
 
+            .picpos {
+                padding: 16px;
+                margin: 16px;
+                width: 200px;
+                border: 1px solid black;
+                box-shadow: 2px 4px 16px rgba(0,0,0,.06);
+                border-radius: 4px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+            }
 
+            img {
+                width: 150px;
+                text-align: center;
+            }
+
+            .img {
+                text-align: center;
+            }
+
+            .quote {
+                display: flex;
+                flex-direction: column;
+                font-weight: 700px;
+                justify-content: right;
+            }
+
+            .author {
+                text-align: right;
+                text-decoration: wavy;
+            }
         </style>
     </body>
 </html>
