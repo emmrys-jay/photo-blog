@@ -12,7 +12,8 @@ label {
 .body {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
+
 }
 
 .header {
@@ -45,9 +46,10 @@ a {
 
 .midder {
     display: flex;
-    height: 600px;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
+    flex: 1;
 }
 
 .form-pos {
@@ -57,3 +59,23 @@ a {
     margin: 20px;
 }
 
+.picpos {
+    padding: 16px;
+    margin: 16px;
+    width: 200px;
+    border: 1px solid black;
+    box-shadow: 2px 4px 16px rgba(0,0,0,.06);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+img {
+    width: 150px;
+    text-align: center;
+}
+
+.img {
+    text-align: center;
+}
