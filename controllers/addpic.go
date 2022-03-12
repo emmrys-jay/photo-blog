@@ -65,13 +65,13 @@ func (m *muxVar) Addpic(w http.ResponseWriter, r *http.Request) {
 
 		//Insert picture info into the database
 		res, err1 := models.AddPicture(uname, t, d, path)
-		fmt.Println(res.RowsAffected())
 		if err1 != nil {
 			check(w, err)
 			return
 		}
 		models.DisplayNum = 0
-		//models.DbRowsAdded += res
+		n, _ := res.RowsAffected()
+		models.DbRowsAdded += int(n)
 	}
 
 	tpl.ExecuteTemplate(w, "addpics.gohtml", nil)
