@@ -8,7 +8,7 @@
         <div class="body">
             <div class="header"> 
                 <div class="logo-pos">
-                    <a href="/">My Photo Blog</a>
+                    <a href="/view">My Photo Blog</a>
                 </div>
                 <div class="other-links">
                     <ul>
@@ -33,7 +33,7 @@
                         <input type="text" id="desc" name="desc"><br>
                         <label for="pic">Add Picture: </label>
                         <input type="file" id="pic" name="pic" multiple><br>
-                        <input type="submit" value="Submit">
+                        <input type="submit" id="submit" value="Submit">
                     </form>
                 </div>
             </div>
@@ -46,16 +46,6 @@
                 </div>
             </div>
         </div>
-        
-        {{if .}}
-            {{$reply = ""}}
-            {{$reply = . | a1}}
-                <script>
-                    {{if $reply = "Picture Added"}}
-                        alert("Picture Added")
-                    {{end}}
-                </script>
-        {{end}}
 
         <style>
             body {
