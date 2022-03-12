@@ -8,13 +8,13 @@
         <div class="body">
             <div class="header"> 
                 <div class="logo-pos">
-                    <a href="/view">My Photo Blog</a>
+                    <a href="/view"><b>My Photo Blog</b></a>
                 </div>
                 <div class="other-links">
                     <ul>
-                        <li><a href="/signup">Sign Up</a></li>
-                        <li><a href="/signin">Sign In</a></li>
-                        <li> <a href="/add">Add Pictures</a></li>
+                        <li><a href="/signup"><b>Sign Up</b></a></li>
+                        <li><a href="/signin"><b>Sign In</b></a></li>
+                        <li> <a href="/add"><b>Add Pictures</b></a></li>
                     </ul>
                 </div>
             </div>
@@ -38,7 +38,12 @@
             </div>
             <div class="footer">
                 <div class="quote">
-                    {{.}}
+                    <div>
+                        <b>“Once a new technology rolls over you, if you're not part of the steamroller, you're part of the road.”</b>
+                    </div>
+                    <div class="author">
+                        <em>- Stewart Brand, Writer</em>
+                    </div>
                 </div>
                 <div class="copyright">
                     Copyright @Emmrys
@@ -70,6 +75,7 @@
                 justify-content: space-between;
                 align-items: center;
                 padding: 0 20px;
+                height: 100px;
             }
 
             ul {
@@ -88,8 +94,9 @@
                 background-color: #ffee00c7;
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
+                justify-content: space-evenly;
                 align-items: center;
+                height: 100px;
             }
 
             .midder {
@@ -104,6 +111,18 @@
                 border-radius: 3px;
                 border-color: black;
                 margin: 20px;
+            }
+
+            .quote {
+                display: flex;
+                flex-direction: column;
+                font-weight: 700px;
+                justify-content: right;
+            }
+
+            .author {
+                text-align: right;
+                text-decoration: wavy;
             }
         </style>
     </body>
