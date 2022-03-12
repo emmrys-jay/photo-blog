@@ -8,21 +8,14 @@ import (
 	"text/template"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/google/uuid"
 )
 
 type muxVar struct{}
 
 var tpl *template.Template
 
-var numInd int
-
-var alertFunct = template.FuncMap{
-	"a1": alertFunc,
-}
-
 func init() {
-	tpl = template.Must(template.New("").Funcs(alertFunct).ParseGlob("views/templates/*.gohtml"))
+	tpl = template.Must(template.ParseGlob("views/templates/*.gohtml"))
 }
 
 func GetMuxVar() *muxVar {
@@ -31,14 +24,27 @@ func GetMuxVar() *muxVar {
 }
 
 func (m *muxVar) Index(w http.ResponseWriter, r *http.Request) {
-	tpl.ExecuteTemplate(w, "index.gohtml", nil)
+
+	if r.Method == http.MethodGet {
+		if models.DisplayNum == 0 {
+			err := models.GetPics(models.DbRowsAdded)
+			if err != nil {
+				check(w, err)
+				return
+			}
+			models.DisplayNum = 1
+			models.DbRowsAdded = 0
+		}
+	}
+
+	tpl.ExecuteTemplate(w, "index.gohtml", models.Pics)
 }
 
 func (m *muxVar) Signin(w http.ResponseWriter, r *http.Request) {
 
 	//check if user is already logged in
 	if alreadyLoggedIn(w, r) {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		http.Redirect(w, r, "/view", http.StatusSeeOther)
 		return
 	}
 
@@ -60,7 +66,7 @@ func (m *muxVar) Signin(w http.ResponseWriter, r *http.Request) {
 			setCookie(w, u)
 
 			//redirect to home page
-			http.Redirect(w, r, "/", http.StatusSeeOther)
+			http.Redirect(w, r, "/view", http.StatusSeeOther)
 			return
 		} else {
 			fmt.Fprint(w, "Invalid Username or Password")
@@ -73,7 +79,7 @@ func (m *muxVar) Signin(w http.ResponseWriter, r *http.Request) {
 
 func (m *muxVar) Signup(w http.ResponseWriter, r *http.Request) {
 	if alreadyLoggedIn(w, r) {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		http.Redirect(w, r, "/view", http.StatusSeeOther)
 	}
 
 	if r.Method == http.MethodPost {
@@ -95,7 +101,7 @@ func (m *muxVar) Signup(w http.ResponseWriter, r *http.Request) {
 		setCookie(w, u)
 
 		//redirect to home page
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		http.Redirect(w, r, "/view", http.StatusSeeOther)
 	}
 	tpl.ExecuteTemplate(w, "signup.gohtml", nil)
 }
@@ -103,7 +109,7 @@ func (m *muxVar) Signup(w http.ResponseWriter, r *http.Request) {
 func (m *muxVar) Signout(w http.ResponseWriter, r *http.Request) {
 
 	if !alreadyLoggedIn(w, r) {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		http.Redirect(w, r, "/view", http.StatusSeeOther)
 		return
 	}
 
@@ -113,23 +119,7 @@ func (m *muxVar) Signout(w http.ResponseWriter, r *http.Request) {
 		MaxAge: -1,
 	}
 	http.SetCookie(w, c)
-	http.Redirect(w, r, "/", http.StatusSeeOther)
-}
-
-func (m *muxVar) Addpic(w http.ResponseWriter, r *http.Request) {
-	tpl.ExecuteTemplate(w, "addpics.gohtml", numInd)
-}
-
-func setCookie(w http.ResponseWriter, uname string) {
-	u := uuid.New().String()
-	uuid := u + "|" + uname
-
-	c := &http.Cookie{
-		Name:  "session",
-		Value: uuid,
-	}
-
-	http.SetCookie(w, c)
+	http.Redirect(w, r, "/view", http.StatusSeeOther)
 }
 
 func alreadyLoggedIn(w http.ResponseWriter, r *http.Request) bool {
@@ -140,11 +130,4 @@ func alreadyLoggedIn(w http.ResponseWriter, r *http.Request) bool {
 
 func check(w http.ResponseWriter, err error) {
 	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
-}
-
-func alertFunc(numIndicator int) string {
-	if numIndicator == 1 {
-		return "Picture Added"
-	}
-	return ""
 }
