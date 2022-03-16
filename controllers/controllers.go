@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"text/template"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
 type muxVar struct{}
