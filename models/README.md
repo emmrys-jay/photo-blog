@@ -1,7 +1,7 @@
 # Database Details
 
-Type: MySql
-Server: Amazon RDS server 
+Type: MySql <br>
+Server: Amazon RDS server <br>
 
 DB instance identifier: database-2 <br>
 Master username: admin <br>
@@ -9,7 +9,7 @@ Master password: my_photo_blog-emmrys <br>
 Security group name: my_blog-secgroup <br>
 Connection name: my-photoblog <br>
 
-<h3>Processes to take note of <h3>
+<h3>Processes to take note of </h3>
 
 <ul>
 <li>While trying to connect to the DB, i had to set the passowrd in the connection literal to the password declared whwn defining my EC2 intance. Instead of the authentication token generated. 
@@ -45,7 +45,7 @@ CREATE TABLE photob ( <br>
     FOREIGN KEY(uname) REFERENCES userspb(uname) ON DELETE CASCADE <br>
 ); <br>
 
-<h3>Processes to take note of <h3>
+<h3>Processes to take note of </h3>
 <ul>
     <li> primary keys cannot be NULL
     <li> desc is a keyword in mysql
