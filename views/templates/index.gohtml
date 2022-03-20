@@ -24,12 +24,14 @@
                 {{range .}} 
                 <div class="picpos">
                     <div class="img">
-                    <img src="{{.Photop}}">
+                        <img src="{{.Photop}}">
                     </div>
                     <div class="picinfo">    
-                    <b> Title:</b>{{.Pname}} <br>
-                    <b> Description:</b> {{.Desc}} <br>
-                    <h6>Author: {{.Uname}} <h6>
+                        <b> Title:</b>{{.Pname}} <br>
+                        <b> Description:</b> {{.Desc}} <br>
+                        <h6>Author: {{.Uname}} </h6>
+                        <h6><a href="/delete?uname={{.Uname}}&pic={{.Photop}}">Delete</a><br>
+                        <a href="/update?uname={{.Uname}}&pic={{.Photop}}">Update</a></h6>
                     </div>
                 </div>
                 {{end}}
