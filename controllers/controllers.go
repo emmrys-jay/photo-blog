@@ -3,9 +3,12 @@ package controllers
 import (
 	"Golang/my-photo-blog/models"
 	"database/sql"
+	"encoding/base64"
 	"fmt"
+	"html/template"
 	"net/http"
-	"text/template"
+
+	"github.com/google/uuid"
 )
 
 type muxVar struct{}
@@ -19,23 +22,6 @@ func init() {
 func GetMuxVar() *muxVar {
 	var m muxVar
 	return &m
-}
-
-func (m *muxVar) Index(w http.ResponseWriter, r *http.Request) {
-
-	if r.Method == http.MethodGet {
-		if models.DisplayNum == 0 {
-			err := models.GetPics(models.DbRowsAdded)
-			if err != nil {
-				check(w, err)
-				return
-			}
-			models.DisplayNum = 1
-			models.DbRowsAdded = 0
-		}
-	}
-
-	tpl.ExecuteTemplate(w, "index.gohtml", models.Pics)
 }
 
 func (m *muxVar) Signin(w http.ResponseWriter, r *http.Request) {
@@ -58,8 +44,13 @@ func (m *muxVar) Signin(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprint(w, "Invalid Username or Password")
 			return
 		}
+		ps, err := base64.StdEncoding.DecodeString(pd)
+		if err != nil {
+			check(w, err)
+			return
+		}
 
-		if pd == p {
+		if string(ps) == p {
 			//set cookie
 			setCookie(w, u)
 
@@ -86,10 +77,11 @@ func (m *muxVar) Signup(w http.ResponseWriter, r *http.Request) {
 		u := r.FormValue("uname")
 		p := r.FormValue("psword")
 
-		//encrypt password using sha256
+		//encode password using base64 encoding
+		ps := base64.StdEncoding.EncodeToString([]byte(p))
 
 		//add new user to the database
-		err := models.Adduser(w, u, e, p)
+		err := models.Adduser(w, u, e, ps)
 		if err != nil {
 			check(w, err)
 			return
@@ -118,6 +110,18 @@ func (m *muxVar) Signout(w http.ResponseWriter, r *http.Request) {
 	}
 	http.SetCookie(w, c)
 	http.Redirect(w, r, "/view", http.StatusSeeOther)
+}
+
+func setCookie(w http.ResponseWriter, uname string) {
+	u := uuid.New().String()
+	uuid := u + "|" + uname
+
+	c := &http.Cookie{
+		Name:  "session",
+		Value: uuid,
+	}
+
+	http.SetCookie(w, c)
 }
 
 func alreadyLoggedIn(w http.ResponseWriter, r *http.Request) bool {
