@@ -12,7 +12,7 @@ Connection name: my-photoblog <br>
 <h3>Processes to take note of </h3>
 
 <ul>
-<li>While trying to connect to the DB, i had to set the passowrd in the connection literal to the password declared whwn defining my EC2 intance. Instead of the authentication token generated. 
+<li>While trying to connect to the DB, i had to set the passowrd in the connection literal to the password declared whwn defining my EC2 intance. Instead of the authentication token generated.
 
 <li>Modified Inbound rules of the security group to allow all traffic (IPv4 and IPv6) to be accepted.
 </ul>
@@ -37,11 +37,11 @@ CREATE TABLE userspb ( <br>
 
 CREATE TABLE photob ( <br>
     id INT AUTO_INCREMENT, <br>
-    uname VARCHAR(20), <br>
-    ptitle VARCHAR(20), <br>
+    uname VARCHAR(30), <br>
+    ptitle VARCHAR(60), <br>
     photo VARCHAR(100) NOT NULL, <br>
     descp VARCHAR(1024) DEFAULT NULL, <br>
-    PRIMARY KEY(ptitle, uname), <br>
+    PRIMARY KEY(id, uname), <br>
     FOREIGN KEY(uname) REFERENCES userspb(uname) ON DELETE CASCADE <br>
 ); <br>
 
