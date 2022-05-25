@@ -1,12 +1,13 @@
 package controllers
 
 import (
-	"Golang/my-photo-blog/models"
 	"database/sql"
 	"encoding/base64"
 	"fmt"
 	"html/template"
 	"net/http"
+
+	"github.com/Emmrys-Jay/my-photo-blog/models"
 
 	"github.com/google/uuid"
 )
