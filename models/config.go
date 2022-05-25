@@ -4,11 +4,11 @@ import (
 	"database/sql"
 	"fmt"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
 
 func ConnectDB() {
-	db, err = sql.Open("mysql", "admin:my_photo_blog-emmrys@tcp(database-2.cpyezbxep7pq.us-east-2.rds.amazonaws.com)/myphotoblog?charset=utf8")
+	db, err = sql.Open("postgres", "postgres:my_photo_blog-emmrys@tcp(database-1.cpyezbxep7pq.us-east-2.rds.amazonaws.com)/myphotoblog?charset=utf8")
 	if err != nil {
 		panic(err)
 	}
