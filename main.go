@@ -1,9 +1,10 @@
 package main
 
 import (
-	"Golang/my-photo-blog/controllers"
-	"Golang/my-photo-blog/models"
 	"net/http"
+
+	"github.com/Emmrys-Jay/my-photo-blog/controllers"
+	"github.com/Emmrys-Jay/my-photo-blog/models"
 )
 
 func main() {
