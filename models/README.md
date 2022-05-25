@@ -1,10 +1,10 @@
 # Database Details
 
-Type: MySql <br>
+Type: PostgreSql <br>
 Server: Amazon RDS server <br>
 
-DB instance identifier: database-2 <br>
-Master username: admin <br>
+DB instance identifier: database-1 <br>
+Master username: postgres <br>
 Master password: my_photo_blog-emmrys <br>
 Security group name: my_blog-secgroup <br>
 Connection name: my-photoblog <br>
