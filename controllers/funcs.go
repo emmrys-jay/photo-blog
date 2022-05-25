@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"Golang/my-photo-blog/models"
 	"crypto/sha1"
 	"fmt"
 	"io"
@@ -9,6 +8,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/Emmrys-Jay/my-photo-blog/models"
 )
 
 func (m *muxVar) ReadPics(w http.ResponseWriter, r *http.Request) {
