@@ -8,7 +8,7 @@ import (
 )
 
 func ConnectDB() {
-	db, err = sql.Open("postgres", "postgres:my_photo_blog-emmrys@tcp(database-1.cpyezbxep7pq.us-east-2.rds.amazonaws.com)/myphotoblog?charset=utf8")
+	db, err = sql.Open("postgres", "user=postgres dbname=myphotoblog password=my_photo_blog-emmrys host=database-1.cpyezbxep7pq.us-east-2.rds.amazonaws.com sslmode=disable")
 	if err != nil {
 		panic(err)
 	}
