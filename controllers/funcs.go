@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"crypto/sha1"
+	"database/sql"
 	"fmt"
 	"io"
 	"net/http"
@@ -16,10 +17,12 @@ func (m *muxVar) ReadPics(w http.ResponseWriter, r *http.Request) {
 	var err error
 	var rows []models.PicInfo
 
-	rows, err = models.GetPics()
+	rows, _ = models.GetPics()
 	if err != nil {
-		check(w, err)
-		return
+		if err != sql.ErrNoRows {
+			check(w, err)
+			return
+		}
 	}
 	tpl.ExecuteTemplate(w, "index.gohtml", rows)
 }
