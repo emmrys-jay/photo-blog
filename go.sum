@@ -1,7 +1,3 @@
-github.com/Emmrys-Jay/my-photo-blog v0.0.0-20220320172520-d6da37c4a99e h1:MJaH5GwqU5K+7Ojyh2h6foGP5xkiimpyjSCzI6VGGL0=
-github.com/Emmrys-Jay/my-photo-blog v0.0.0-20220320172520-d6da37c4a99e/go.mod h1:Pc58LEn3fjWRs8wsUy5vZ+SOe9Sn9mYTIZh50Nt+LLM=
-github.com/go-sql-driver/mysql v1.6.0 h1:BCTh4TKNUYmOmMUcQ3IipzF5prigylS7XXjEkfCHuOE=
-github.com/go-sql-driver/mysql v1.6.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
 github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
 github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/lib/pq v1.10.6 h1:jbk+ZieJ0D7EVGJYpL9QTz7/YW6UHbmdnZWYyK5cdBs=
