@@ -10,7 +10,8 @@ import (
 func main() {
 	models.ConnectDB()
 	m := controllers.GetMuxVar()
-	http.Handle("/", http.StripPrefix("/views/pics", http.FileServer(http.Dir("./views/pics"))))
+	// http.Handle("/css/", http.StripPrefix("/views/", http.FileServer(http.Dir("views/templates"))))
+	http.Handle("/views/", http.StripPrefix("/views/", http.FileServer(http.Dir("views"))))
 	http.HandleFunc("/view", m.ReadPics)
 	http.HandleFunc("/signin", m.Signin)
 	http.HandleFunc("/signup", m.Signup)
