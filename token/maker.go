@@ -6,13 +6,15 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
+var secretKey = []byte("myPersonal_secret_key")
+
 type JWTMaker struct {
-	secretKey string
+	secretKey []byte
 }
 
-func NewJWTMaker(payload Payload, jwtkey string) *JWTMaker {
+func NewJWTMaker() *JWTMaker {
 	return &JWTMaker{
-		secretKey: jwtkey,
+		secretKey: secretKey,
 	}
 }
 
@@ -46,5 +48,3 @@ func (jm *JWTMaker) VerifyToken(token string) (*Payload, error) {
 
 	return payload, nil
 }
-
-func (jm JWTMaker) RefreshToken() (string, error)
