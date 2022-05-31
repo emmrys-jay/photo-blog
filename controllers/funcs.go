@@ -9,8 +9,10 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/Emmrys-Jay/my-photo-blog/models"
+	"github.com/Emmrys-Jay/my-photo-blog/token"
 )
 
 func (m *muxVar) ReadPics(w http.ResponseWriter, r *http.Request) {
@@ -24,28 +26,50 @@ func (m *muxVar) ReadPics(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	tpl.ExecuteTemplate(w, "index.gohtml", rows)
+	tpl.ExecuteTemplate(w, "index.html", rows)
 }
 
 func (m *muxVar) Addpic(w http.ResponseWriter, r *http.Request) {
 
-	if !alreadyLoggedIn(w, r) {
+	if !alreadyLoggedIn(r) {
 		redirectToView(w, r)
 		return
 	}
 
 	//get currently stored cookie
-	c, _ := r.Cookie("session")
-	uname := strings.Split(c.Value, "|")[1] //get username from the current cookie
+	c, _ := r.Cookie("token")
+	tokenString := c.Value
+	tokenMaker := token.NewJWTMaker()
+	payload, err := tokenMaker.VerifyToken(tokenString)
+	if err != nil {
+		check(w, err)
+		return
+	}
 
 	if r.Method == http.MethodPost {
+		// Modify or Refresh the payload by updating the payload info
+		payload = &token.Payload{
+			Username:  payload.Username,
+			IssuedAt:  time.Now(),
+			ExpiresAt: time.Now().Add(time.Minute * 5),
+		}
+
+		// Create and set new token in a cookie
+		newToken, err := tokenMaker.CreateToken(payload)
+		if err != nil {
+			check(w, err)
+			return
+		}
+		setCookie(w, newToken)
+
 		t := r.FormValue("picname")
 		d := r.FormValue("desc")
+		uname := payload.Username
 
 		//Work on the file inputed by getting the file extension and storing the file
 		//using sha1 in conjunction with the username and multipart file details.
 		//i created a file in a particular directory on the server, then sent the full
-		//file path to the mysql database running on AWS
+		//file path to the postgresql database running on AWS
 		mf, fh, err := r.FormFile("pic")
 		if err != nil {
 			check(w, err)
@@ -85,11 +109,11 @@ func (m *muxVar) Addpic(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tpl.ExecuteTemplate(w, "addpics.gohtml", nil)
+	tpl.ExecuteTemplate(w, "addpics.html", nil)
 }
 
 func (m *muxVar) UpdatePic(w http.ResponseWriter, r *http.Request) {
-	if !alreadyLoggedIn(w, r) {
+	if !alreadyLoggedIn(r) {
 		redirectToView(w, r)
 		return
 	}
@@ -102,15 +126,21 @@ func (m *muxVar) UpdatePic(w http.ResponseWriter, r *http.Request) {
 
 	//check if the url contains no uname and pic params
 	if uname == "" || photoPath == "" {
-		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
 		return
 	}
 
 	//get currently stored cookie
-	c, _ := r.Cookie("session")
-	unameCookie := strings.Split(c.Value, "|")[1] //get username from the current cookie
+	c, _ := r.Cookie("token")
+	tokenString := c.Value
+	tokenMaker := token.NewJWTMaker()
+	payload, err := tokenMaker.VerifyToken(tokenString)
+	if err != nil {
+		check(w, err)
+		return
+	}
 
-	if uname == unameCookie { //compare the current signed in user to the user who added the picture.
+	if uname == payload.Username { //compare the current signed in user to the user who added the picture.
 
 		//get all values stored of the single picture stored in the db
 		rowStruct, err = models.GetOnePic(uname, photoPath)
@@ -120,6 +150,21 @@ func (m *muxVar) UpdatePic(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if r.Method == http.MethodPost {
+
+			// Modify payload so it can be used to create a new token
+			payload = &token.Payload{
+				Username:  payload.Username,
+				IssuedAt:  time.Now(),
+				ExpiresAt: time.Now().Add(time.Minute * 5),
+			}
+
+			// Create and set new token in a cookie
+			newToken, err := tokenMaker.CreateToken(payload)
+			if err != nil {
+				check(w, err)
+				return
+			}
+			setCookie(w, newToken)
 
 			//get current form user inputs
 			t := r.FormValue("picname")
@@ -132,7 +177,7 @@ func (m *muxVar) UpdatePic(w http.ResponseWriter, r *http.Request) {
 				//call function to add the updated details of the image since the image wasn't changed
 				err := models.UpdatePic(uname, photoPath, t, d, "")
 				if err != nil {
-					//check(w, err)
+					check(w, err)
 					return
 				}
 				redirectToView(w, r)
@@ -184,30 +229,50 @@ func (m *muxVar) UpdatePic(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tpl.ExecuteTemplate(w, "update.gohtml", rowStruct)
+	tpl.ExecuteTemplate(w, "update.html", rowStruct)
 }
 
 func (m *muxVar) DeletePic(w http.ResponseWriter, r *http.Request) {
 
 	//check if user is already logged in
-	if !alreadyLoggedIn(w, r) {
+	if !alreadyLoggedIn(r) {
 		redirectToView(w, r)
 		return
 	}
 
 	//get currently stored cookie
-	c, _ := r.Cookie("session")
-	unameCookie := strings.Split(c.Value, "|")[1] //get username from the current cookie
+	c, _ := r.Cookie("token")
+	tokenString := c.Value
+	tokenMaker := token.NewJWTMaker()
+	payload, err := tokenMaker.VerifyToken(tokenString)
+	if err != nil {
+		check(w, err)
+		return
+	}
 
 	//get params from the url
 	uname := r.FormValue("uname")
 	photoPath := r.FormValue("pic")
 
 	//check if current signed in user is the owner of the image
-	if uname != unameCookie {
+	if uname != payload.Username {
 		fmt.Fprintln(w, "Oops! \n You aren't the owner of this picture, therefore you can't delete it")
 		return
 	}
+
+	payload = &token.Payload{
+		Username:  payload.Username,
+		IssuedAt:  time.Now(),
+		ExpiresAt: time.Now().Add(time.Minute * 5),
+	}
+
+	// Create and set new token in a cookie
+	newToken, err := tokenMaker.CreateToken(payload)
+	if err != nil {
+		check(w, err)
+		return
+	}
+	setCookie(w, newToken)
 
 	//delete the file stored in server
 	wd, err := os.Getwd()
@@ -217,13 +282,12 @@ func (m *muxVar) DeletePic(w http.ResponseWriter, r *http.Request) {
 	f := filepath.Join(wd, photoPath)
 	os.Remove(f)
 
-	//delete pricture from db
+	//delete picture from db
 	err = models.DeletePicture(uname, photoPath)
 	if err != nil {
 		check(w, err)
 		return
 	}
-	//models.DisplayNum = 0
 	redirectToView(w, r)
 }
 
