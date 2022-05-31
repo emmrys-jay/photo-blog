@@ -13,7 +13,7 @@ This a photo-blog which allows a user to login and add pictures via a profile. T
   <li> View all pictures on a general home-page
   <li> Save pictures on the server
   <li> Picture path on the server saved to a postgresql database
-  <li> Postgresql database server running on AWS RDS service
+  <li> PostgreSQL database server running on AWS RDS service
   <li> Create, Read, update and delete (CRUD) from database
   <li> Password encoded before transit to database
 </ul>
