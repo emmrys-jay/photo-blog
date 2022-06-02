@@ -12,7 +12,7 @@ func main() {
 	m := controllers.GetMuxVar()
 	// http.Handle("/css/", http.StripPrefix("/views/", http.FileServer(http.Dir("views/templates"))))
 	http.Handle("/views/", http.StripPrefix("/views/", http.FileServer(http.Dir("views"))))
-	http.HandleFunc("/view", m.ReadPics)
+	http.HandleFunc("/", m.ReadPics)
 	http.HandleFunc("/signin", m.Signin)
 	http.HandleFunc("/signup", m.Signup)
 	http.HandleFunc("/add", m.Addpic)
