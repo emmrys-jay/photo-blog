@@ -17,3 +17,5 @@ This a photo-blog which allows a user to login and add pictures via a profile. T
   <li> Create, Read, update and delete (CRUD) from database
   <li> Password encoded before transit to database
 </ul>
+
+<b>Background Photo by Philippe Donn</b>: https://www.pexels.com/photo/brown-hummingbird-selective-focus-photography-1133957/
