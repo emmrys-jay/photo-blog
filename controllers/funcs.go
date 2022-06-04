@@ -16,8 +16,9 @@ import (
 )
 
 func (m *muxVar) ReadPics(w http.ResponseWriter, r *http.Request) {
+
 	var err error
-	var rows []models.PicInfo
+	var rows = []models.PicInfo{}
 
 	rows, _ = models.GetPics()
 	if err != nil {
@@ -26,13 +27,17 @@ func (m *muxVar) ReadPics(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+	if alreadyLoggedIn(r) {
+		tpl.ExecuteTemplate(w, "index-logged.html", rows)
+		return
+	}
 	tpl.ExecuteTemplate(w, "index.html", rows)
 }
 
 func (m *muxVar) Addpic(w http.ResponseWriter, r *http.Request) {
 
 	if !alreadyLoggedIn(r) {
-		redirectToView(w, r)
+		http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
 		return
 	}
 
@@ -291,6 +296,53 @@ func (m *muxVar) DeletePic(w http.ResponseWriter, r *http.Request) {
 	redirectToView(w, r)
 }
 
+func (m *muxVar) SearchPics(w http.ResponseWriter, r *http.Request) {
+	//Define variable to store search keyword
+	var searchKeyword string
+
+	// Define variable for storing results
+	var rows = []models.PicInfo{}
+	var err error
+
+	if r.Method != http.MethodPost {
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
+	} else {
+		//get param from the form field
+		searchKeyword = r.FormValue("search")
+
+		// Pass search keyword into the db function
+		rows, err = models.SearchPics(searchKeyword)
+		if err != nil {
+			// Handle error when search keyword is not found
+			if err == sql.ErrNoRows {
+				fmt.Println("No results found! \nPlease go back and try with another keyword.")
+				return
+			} else {
+				check(w, err)
+				return
+			}
+		}
+	}
+
+	// Create a new struct so search keyword can be added to the values passed to html template
+	var response = struct {
+		Query string
+		Rows  []models.PicInfo
+	}{
+		Query: searchKeyword,
+		Rows:  rows,
+	}
+
+	// Decide which html template to render based on if user is logged in or not
+	if alreadyLoggedIn(r) {
+		tpl.ExecuteTemplate(w, "search-result-logged.html", response)
+	} else {
+		tpl.ExecuteTemplate(w, "search-result.html", response)
+	}
+
+}
+
 func redirectToView(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/view", http.StatusSeeOther)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
