@@ -1137,28 +1137,28 @@ section {
   font-family: "Open Sans", sans-serif;
 }
 
-#main .contact .container .row .php-email-form {
+#main .contact .container .row .email-form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#main .contact .container .row .php-email-form .form-group{
+#main .contact .container .row .email-form .form-group{
   width: 100%;
 }
 
-#main .contact .container .row .php-email-form .form-group textarea {
+#main .contact .container .row .email-form .form-group textarea {
   font-family: "Open Sans", sans-serif;
   color:#657a6d;
   font-size: 14px;
 }
 
-#main .contact .container .row .php-email-form .file {
+#main .contact .container .row .email-form .file {
   font-size: 14px;
   color: #657a6d;
   font-family: "Open Sans", sans-serif;
 }
-#main .contact .container .row .php-email-form .file input[type=file]::file-selector-button {
+#main .contact .container .row .email-form .file input[type=file]::file-selector-button {
   border: 1px solid #657a6d;
   border-radius: 30px;
   font-size: 14px;
@@ -1212,10 +1212,10 @@ section {
   background: #5fcf80;
   color: #fff;
 }
-.contact .php-email-form .form-group {
+.contact .email-form .form-group {
   padding-bottom: 8px;
 }
-.contact .php-email-form .error-message {
+.contact .email-form .error-message {
   display: none;
   color: #fff;
   background: #ed3c0d;
@@ -1223,10 +1223,10 @@ section {
   padding: 15px;
   font-weight: 600;
 }
-.contact .php-email-form .error-message br + br {
+.contact .email-form .error-message br + br {
   margin-top: 25px;
 }
-.contact .php-email-form .sent-message {
+.contact .email-form .sent-message {
   display: none;
   color: #fff;
   background: #18d26e;
@@ -1234,13 +1234,13 @@ section {
   padding: 15px;
   font-weight: 600;
 }
-.contact .php-email-form .loading {
+.contact .email-form .loading {
   display: none;
   background: #fff;
   text-align: center;
   padding: 15px;
 }
-.contact .php-email-form .loading:before {
+.contact .email-form .loading:before {
   content: "";
   display: inline-block;
   border-radius: 50%;
@@ -1252,18 +1252,18 @@ section {
   -webkit-animation: animate-loading 1s linear infinite;
   animation: animate-loading 1s linear infinite;
 }
-.contact .php-email-form input, .contact .php-email-form textarea {
+.contact .email-form input, .contact .email-form textarea {
   border-radius: 4px;
   box-shadow: none;
   font-size: 14px;
 }
-.contact .php-email-form input:focus, .contact .php-email-form textarea:focus {
+.contact .email-form input:focus, .contact .email-form textarea:focus {
   border-color: #5fcf80;
 }
-.contact .php-email-form input {
+.contact .email-form input {
   height: 44px;
 }
-.contact .php-email-form button[type=submit] {
+.contact .email-form button[type=submit] {
   background: #5fcf80;
   border: 0;
   padding: 10px 35px;
@@ -1271,7 +1271,7 @@ section {
   transition: 0.4s;
   border-radius: 50px;
 }
-.contact .php-email-form button[type=submit]:hover {
+.contact .email-form button[type=submit]:hover {
   background: #3ac162;
 }
 @-webkit-keyframes animate-loading {
@@ -1289,6 +1289,50 @@ section {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/*--------------------------------------------------------------
+# Pictures
+--------------------------------------------------------------*/
+#pictures .pictures {
+  margin-top: 30px;
+}
+
+#pictures .midder {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+
+#pictures .pictures .midder .picpos {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #5fcf80;
+  padding: 30px;
+  max-width: 500px;
+  align-items: center;
+  padding: 20px 0;
+  box-shadow: 5px 10px 8px #888888;
+  justify-content: space-between;
+}
+
+#pictures .pictures .midder .picpos .img img {
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto;
+}
+
+#pictures .pictures .midder .picpos .picinfo{
+font-family: "Open Sans", sans-serif;
+justify-self: flex-end;
+}
+
+#pictures .pictures .midder .picpos .picinfo span {
+  display: block;
+  font-weight: bold;
+  font-size: medium;
+  text-align: end;
+  color: #5fcf80;
 }
 
 /*--------------------------------------------------------------
