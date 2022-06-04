@@ -130,28 +130,28 @@
 
           <div class="col-lg-8 mt-5 mt-lg-0">
 
-            <form method="post" role="form" class="php-email-form" enctype="multipart/form-data">
+            <form method="post" role="form" class="email-form" enctype="multipart/form-data">
               <!-- <div class="row">
                 <div class="col-md-6 form-group mt-3 mt-md-0">
                   <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
                 </div>
               </div> -->
               <div class="form-group mt-3">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Picture Title" required>
+                <input type="text" class="form-control" name="picname" id="subject" placeholder="Picture Title" required>
               </div>
               <div class="col-md-6 form-group">
-                <textarea name="description" id="message" class="form-control" rows="5" required>Picture Description...</textarea><br>
+                <textarea name="desc" id="message" class="form-control" rows="5" required>Picture Description...</textarea><br>
               </div>
               <div class="col-md-6 form-group file">
                 <label for="pic">Add Picture: </label>
                 <input type="file" id="pic" name="pic" required>
               </div>
-              <div class="my-3">
+              <!-- <div class="my-3">
                 <div class="loading">Loading</div>
                 <div class="error-message"></div>
                 <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Add</button></div>
+              </div> -->
+              <div class="submit-btn"><button type="submit">Add</button></div>
             </form>
           </div>
 
