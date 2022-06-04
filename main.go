@@ -19,5 +19,6 @@ func main() {
 	http.HandleFunc("/logout", m.Signout)
 	http.HandleFunc("/update", m.UpdatePic)
 	http.HandleFunc("/delete", m.DeletePic)
+	http.HandleFunc("/search", m.SearchPics)
 	http.ListenAndServe(":8080", nil)
 }
