@@ -16,7 +16,7 @@ type muxVar struct{}
 var tpl *template.Template
 
 func init() {
-	tpl = template.Must(template.ParseGlob("views/templates/*.html"))
+	tpl = template.Must(template.ParseGlob("views/templates/new/*.html"))
 }
 
 func GetMuxVar() *muxVar {
@@ -64,7 +64,7 @@ func (m *muxVar) Signin(w http.ResponseWriter, r *http.Request) {
 			setCookie(w, tokenString)
 
 			//redirect to home page
-			http.Redirect(w, r, "/view", http.StatusSeeOther)
+			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
 		} else {
 			fmt.Fprint(w, "Invalid Username or Password")
@@ -110,7 +110,7 @@ func (m *muxVar) Signup(w http.ResponseWriter, r *http.Request) {
 		setCookie(w, tokenString)
 
 		//redirect to home page
-		http.Redirect(w, r, "/view", http.StatusSeeOther)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 	tpl.ExecuteTemplate(w, "signup.html", nil)
 }
@@ -128,7 +128,7 @@ func (m *muxVar) Signout(w http.ResponseWriter, r *http.Request) {
 		MaxAge: -1,
 	}
 	http.SetCookie(w, c)
-	http.Redirect(w, r, "/view", http.StatusSeeOther)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func setCookie(w http.ResponseWriter, token string) {
