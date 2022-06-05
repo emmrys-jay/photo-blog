@@ -42,21 +42,21 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.html">PhotoBlog</a></h1>
+      <h1 class="logo me-auto"><a href="/">PhotoBlog</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="active" href="index.html">Home</a></li>
+          <li><a class="active" href="/">Home</a></li>
           <li>
-            <form class="search-bar">
+            <form action="/search" method="get" class="search-bar">
               <input type="text" name="search" placeholder="Search Pictures" required>
               <button type="submit">Search</button>
             </form>
           </li>
+          <li><a href="/add">Add Pictures</a></li>
           <!-- <li><a href="courses.html">Courses</a></li>
-          <li><a href="trainers.html">Trainers</a></li>
           <li><a href="events.html">Events</a></li>
           <li><a href="pricing.html">Pricing</a></li> -->
 
@@ -78,10 +78,6 @@
             </ul>
           </li> -->
           <li><a href="/signin">Sign In</a></li>
-          <!-- <li><a href="index-logged.html">Logged-In Index</a></li>
-          <li><a href="search-result.html">Search Result</a></li>
-          <li><a href="search-result-logged.html">Search Result Logged-In</a></li> -->
-          <li><a href="/add">Add Pictures</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -96,7 +92,7 @@
     <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
       <h1>Show Yourself,<br>Tell Your Story</h1>
       <h2>Display your personality to the world through visuals</h2>
-      <a href="signup.html" class="btn-get-started">Get Started</a>
+      <a href="/signup" class="btn-get-started">Get Started</a>
     </div>
   </section><!-- End Hero -->
 
@@ -244,19 +240,7 @@
               <h3><a href="">Create Your Virtual World</a></h3>
             </div>
           </div>
-          <!--  <div class="col-lg-3 col-md-4 mt-4">
-            <div class="icon-box">
-              <i class="ri-anchor-line" style="color: #b2904f;"></i>
-              <h3><a href="">Dirada Pack</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4">
-            <div class="icon-box">
-              <i class="ri-disc-line" style="color: #b20969;"></i>
-              <h3><a href="">Moton Ideal</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4">
+          <!-- <div class="col-lg-3 col-md-4 mt-4">
             <div class="icon-box">
               <i class="ri-base-station-line" style="color: #ff5828;"></i>
               <h3><a href="">Verdo Park</a></h3>
@@ -286,19 +270,26 @@
                 {{range .}} 
                 <div class="picpos">
                     <div class="img">
-                        <img src="{{.Photop}}">
+                        <img src="{{.Photop}}" alt={{.Pname}}>
                     </div>
-                    <div class="picinfo">    
-                        <b> Title:</b>{{.Pname}} <br>
-                        <b> Description:</b> {{.Desc}} <br>
-                        <h6>Author: {{.Uname}} </h6>
-                        <h6><a href="/delete?uname={{.Uname}}&pic={{.Photop}}">Delete</a><br>
-                        <a href="/update?uname={{.Uname}}&pic={{.Photop}}">Update</a></h6>
+                    <div class="picinfo">  
+                        <div class="title">
+                          <b> Title: </b>{{.Pname}}
+                        </div>  
+                        <div class="desc">
+                          <b> Description: </b> {{.Desc}}
+                        </div>
+                        <p>
+                            <a href="/delete?uname={{.Uname}}&pic={{.Photop}}">Delete</a>
+                            <a href="/update?uname={{.Uname}}&pic={{.Photop}}">Update</a>
+                        </p>
+                        <span>{{.Uname}}</span>
                     </div>
+                    
                 </div>
                 {{end}}
             </div>
-            {{end}}
+          {{end}}
       </div>
 
       
@@ -498,16 +489,16 @@
             <p>
               Show Yourself <br>
               Tell Your Story<br>
-              Display your personality <br><br>
+              Display your personlaity <br><br>
             </p>
           </div>
 
           <div class="col-lg-2 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="index.html">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="signin.html">Sign In</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="signup.html">Sign Up</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/signin">Sign In</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/signup">Sign Up</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
             </ul>
           </div>

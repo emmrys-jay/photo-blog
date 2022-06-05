@@ -42,13 +42,13 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.html">PhotoBlog</a></h1>
+      <h1 class="logo me-auto"><a href="/">PhotoBlog</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      <!-- <a href="/" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="active" href="index.html">Home</a></li>
+          <li><a class="active" href="/">Home</a></li>
           <!-- <li>
             <form class="search-bar">
               <input type="text" name="search" placeholder="Search Pictures" required>
@@ -271,29 +271,38 @@
 
     <section id="pictures">
       <div class="preamble">
-        <h2>Search Results For:</h2>
-        <h3>{{.Search}}</h3>
+        <h2>Search Results For</h2>
+      </div>
+      {{if .}}
+      <div class="preamble">
+        <h3>{{.Query}}</h3>
       </div>
       <div class="pictures">
-        {{if .}}
-          <div class="midder">
-              {{range .}} 
-              <div class="picpos">
-                  <div class="img">
-                      <img src="{{.Photop}}">
-                  </div>
-                  <div class="picinfo">    
-                      <b> Title:</b>{{.Pname}} <br>
-                      <b> Description:</b> {{.Desc}} <br>
-                      <h6>Author: {{.Uname}} </h6>
-                      <h6><a href="/delete?uname={{.Uname}}&pic={{.Photop}}">Delete</a><br>
-                      <a href="/update?uname={{.Uname}}&pic={{.Photop}}">Update</a></h6>
-                  </div>
-              </div>
-              {{end}}
-          </div>
-        {{end}}
+            <div class="midder">
+                {{range .Rows}} 
+                <div class="picpos">
+                    <div class="img">
+                        <img src="{{.Photop}}" alt={{.Pname}}>
+                    </div>
+                    <div class="picinfo">  
+                        <div class="title">
+                          <b> Title: </b>{{.Pname}}
+                        </div>  
+                        <div class="desc">
+                          <b> Description: </b> {{.Desc}}
+                        </div>
+                        <p>
+                            <a href="/delete?uname={{.Uname}}&pic={{.Photop}}">Delete</a>
+                            <a href="/update?uname={{.Uname}}&pic={{.Photop}}">Update</a>
+                        </p>
+                        <span>{{.Uname}}</span>
+                    </div>
+                    
+                </div>
+                {{end}}
+            </div> 
       </div>
+      {{end}}
       <!-- <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
         <img src="assets/img/about.jpg" class="img-fluid" alt="">
       </div> -->
@@ -505,9 +514,9 @@
           <div class="col-lg-2 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="index.html">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="signin.html">Sign In</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="signup.html">Sign Up</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/signin">Sign In</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/signup">Sign Up</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
             </ul>
           </div>
