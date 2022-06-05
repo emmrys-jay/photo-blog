@@ -304,7 +304,7 @@ func (m *muxVar) SearchPics(w http.ResponseWriter, r *http.Request) {
 	var rows = []models.PicInfo{}
 	var err error
 
-	if r.Method != http.MethodPost {
+	if r.Method != http.MethodGet {
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	} else {
