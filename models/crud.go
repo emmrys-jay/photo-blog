@@ -89,3 +89,26 @@ func UpdatePic(olduname, oldphotoPath, pname, desc, photop string) error {
 					  WHERE uname = $4 AND photo = $5`, pname, desc, photop, olduname, oldphotoPath)
 	return err
 }
+
+func SearchPics(query string) ([]PicInfo, error) {
+	var p PicInfo
+	var SliceOfP []PicInfo
+	var rows *sql.Rows
+	var err error
+
+	rows, err = db.Query(`SELECT * FROM photob 
+				WHERE ptitle ~ $1 OR descp ~ $2`, query, query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err = rows.Scan(&p.Id, &p.Uname, &p.Pname, &p.Photop, &p.Desc)
+		if err != nil {
+			return nil, err
+		}
+		SliceOfP = append(SliceOfP, p)
+	}
+	return SliceOfP, nil
+}
