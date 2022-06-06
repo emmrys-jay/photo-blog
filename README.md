@@ -39,7 +39,7 @@ This a photo-blog which allows a user to login and add pictures via a profile. T
 
 # Sign Up Page
 
-<img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/signup.png" alt=""sign up>
+<img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/signup.png" alt="sign up">
 
 # Add Picture Page
 
@@ -57,3 +57,6 @@ This a photo-blog which allows a user to login and add pictures via a profile. T
   <li> Database server running on Amazom RDS
 </ul>
 
+<p>Home Page Background Photo by <a href="https://www.pexels.com/photo/brown-hummingbird-selective-focus-photography-1133957/">Philippe Donn</a> </p>
+
+<b>NB:</b> Instruction on setting up an Amazon RDS instance can be found <a href="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/models/README.md">here</a>
