@@ -14,8 +14,14 @@ This a photo-blog which allows a user to login and add pictures via a profile. T
   <li> Save pictures on the server
   <li> Picture path on the server saved to a postgresql database
   <li> PostgreSQL database server running on AWS RDS service
+  <li> Token authentication with JWT
+  <li> Search database with regular enpressions
   <li> Create, Read, update and delete (CRUD) from database
-  <li> Password encoded before transit to database
+  <li> Password base64-encoded before transit to database
 </ul>
 
-<b>Background Photo by Philippe Donn</b>: https://www.pexels.com/photo/brown-hummingbird-selective-focus-photography-1133957/
+<b>Home Page Background Photo by Philippe Donn</b>: https://www.pexels.com/photo/brown-hummingbird-selective-focus-photography-1133957/
+
+# Home Page
+
+<img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/home.png" alt="home-page">

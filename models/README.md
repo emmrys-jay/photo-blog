@@ -64,4 +64,3 @@ CREATE TABLE photob ( <br>
 ```
 
 <b>NB:</b> The password flag on the CLI does not need any values. The CLI will prompt for a password after running the command. Specify "--no-password" if the DB does not need authentication.
-
