@@ -16,9 +16,9 @@ type muxVar struct{}
 
 var tpl *template.Template
 
-// init parses all html templates
+// init parses all gohtml templates
 func init() {
-	tpl = template.Must(template.ParseGlob("views/templates/*.html"))
+	tpl = template.Must(template.ParseGlob("views/templates/*.gohtml"))
 }
 
 // GetMuxVar is used to pass muxVar variable to main.go
@@ -76,7 +76,7 @@ func (m *muxVar) Signin(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tpl.ExecuteTemplate(w, "signin.html", nil)
+	tpl.ExecuteTemplate(w, "signin.gohtml", nil)
 }
 
 // Signup handles sign up request from user
@@ -118,7 +118,7 @@ func (m *muxVar) Signup(w http.ResponseWriter, r *http.Request) {
 		//redirect to home page
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
-	tpl.ExecuteTemplate(w, "signup.html", nil)
+	tpl.ExecuteTemplate(w, "signup.gohtml", nil)
 }
 
 // Signout handles sign out requests from user

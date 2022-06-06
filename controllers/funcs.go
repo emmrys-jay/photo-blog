@@ -40,10 +40,10 @@ func (m *muxVar) ReadPics(w http.ResponseWriter, r *http.Request) {
 			Rows:     rows,
 		}
 
-		tpl.ExecuteTemplate(w, "index-logged.html", response)
+		tpl.ExecuteTemplate(w, "index-logged.gohtml", response)
 		return
 	}
-	tpl.ExecuteTemplate(w, "index.html", rows)
+	tpl.ExecuteTemplate(w, "index.gohtml", rows)
 }
 
 // Addpic handles authorized client add pictures requests
@@ -127,7 +127,7 @@ func (m *muxVar) Addpic(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tpl.ExecuteTemplate(w, "addpics.html", payload)
+	tpl.ExecuteTemplate(w, "addpics.gohtml", payload)
 }
 
 // UpdatePic handles authorized client update requests
@@ -248,7 +248,7 @@ func (m *muxVar) UpdatePic(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tpl.ExecuteTemplate(w, "update.html", rowStruct)
+	tpl.ExecuteTemplate(w, "update.gohtml", rowStruct)
 }
 
 // DeletePic handles authorized clients delete requests
@@ -311,7 +311,7 @@ func (m *muxVar) DeletePic(w http.ResponseWriter, r *http.Request) {
 	redirectToHome(w, r)
 }
 
-// SearchRequestResponse is the datatype where the data is stored before being sent to the search html template
+// SearchRequestResponse is the datatype where the data is stored before being sent to the searchgohtml template
 type SearchRequestResponse struct {
 	Query string
 	Rows  []models.PicInfo
@@ -347,13 +347,13 @@ func (m *muxVar) SearchPics(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Create a new struct so search keyword can be added to the values passed to html template
+	// Create a new struct so search keyword can be added to the values passed to gohtml template
 	response := &SearchRequestResponse{
 		Query: searchKeyword,
 		Rows:  rows,
 	}
 
-	// Decide which html template to render based on if user is logged in or not
+	// Decide which gohtml template to render based on if user is logged in or not
 	// Get username of the signed in user if logged in
 	if uname, ok := alreadyLoggedIn(r); ok {
 
@@ -365,9 +365,9 @@ func (m *muxVar) SearchPics(w http.ResponseWriter, r *http.Request) {
 			Response: response,
 		}
 
-		tpl.ExecuteTemplate(w, "search-result-logged.html", ResponseWithUsername)
+		tpl.ExecuteTemplate(w, "search-result-logged.gohtml", ResponseWithUsername)
 	} else {
-		tpl.ExecuteTemplate(w, "search-result.html", response)
+		tpl.ExecuteTemplate(w, "search-result.gohtml", response)
 	}
 
 }
