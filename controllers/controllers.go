@@ -11,24 +11,28 @@ import (
 	"github.com/Emmrys-Jay/my-photo-blog/token"
 )
 
+// muxVar is used to pass handler methods to main
 type muxVar struct{}
 
 var tpl *template.Template
 
+// init parses all html templates
 func init() {
-	tpl = template.Must(template.ParseGlob("views/templates/new/*.html"))
+	tpl = template.Must(template.ParseGlob("views/templates/*.html"))
 }
 
+// GetMuxVar is used to pass muxVar variable to main.go
 func GetMuxVar() *muxVar {
 	var m muxVar
 	return &m
 }
 
+// Signin handles sign in requests from user
 func (m *muxVar) Signin(w http.ResponseWriter, r *http.Request) {
 
 	//check if user is already logged in
-	if alreadyLoggedIn(r) {
-		redirectToView(w, r)
+	if _, ok := alreadyLoggedIn(r); ok {
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	}
 
@@ -75,9 +79,11 @@ func (m *muxVar) Signin(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "signin.html", nil)
 }
 
+// Signup handles sign up request from user
 func (m *muxVar) Signup(w http.ResponseWriter, r *http.Request) {
-	if alreadyLoggedIn(r) {
-		redirectToView(w, r)
+	if _, ok := alreadyLoggedIn(r); ok {
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
 	}
 
 	if r.Method == http.MethodPost {
@@ -115,10 +121,11 @@ func (m *muxVar) Signup(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "signup.html", nil)
 }
 
+// Signout handles sign out requests from user
 func (m *muxVar) Signout(w http.ResponseWriter, r *http.Request) {
 
-	if !alreadyLoggedIn(r) {
-		redirectToView(w, r)
+	if _, ok := alreadyLoggedIn(r); !ok {
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	}
 
@@ -131,6 +138,7 @@ func (m *muxVar) Signout(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
+// setCookie stores the generated JWT token in a cookie
 func setCookie(w http.ResponseWriter, token string) {
 	// u := uuid.New().String()
 	// uuid := u + "|" + uname
@@ -143,19 +151,24 @@ func setCookie(w http.ResponseWriter, token string) {
 	http.SetCookie(w, c)
 }
 
-func alreadyLoggedIn(r *http.Request) bool {
+// alreadyLoggedIn checks if a user is ligged in by getting token from browser cookie
+func alreadyLoggedIn(r *http.Request) (string, bool) {
 	cookie, err := r.Cookie("token")
 	if err != nil {
-		return false
+		return "", false
 	}
 	jwtMaker := token.NewJWTMaker()
 	token := cookie.Value
 
-	_, err = jwtMaker.VerifyToken(token)
+	payload, err := jwtMaker.VerifyToken(token)
+	if err != nil {
+		return "", false
+	}
 
-	return err == nil
+	return payload.Username, err == nil
 }
 
+// check is used to return an Internal Server Error to the client
 func check(w http.ResponseWriter, err error) {
 	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 }

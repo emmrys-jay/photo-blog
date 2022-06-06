@@ -8,6 +8,7 @@ import (
 var db *sql.DB
 var err error
 
+// PicInfo stores is the DB struct model
 type PicInfo struct {
 	Id     int
 	Uname  string
@@ -16,21 +17,25 @@ type PicInfo struct {
 	Desc   string
 }
 
+// Adduser adds a new user to the database
 func Adduser(w http.ResponseWriter, uname, email, psword string) error {
 	_, err = db.Exec(`INSERT INTO userspb VALUES($1, $2, $3);`, uname, email, psword)
 	return err
 }
 
+// AddPicture adds a new picture to the database
 func AddPicture(uname, pname, desc, photop string) error {
 	_, err := db.Exec(`INSERT INTO photob(uname, ptitle, photo, descp) VALUES($1, $2, $3, $4)`, uname, pname, photop, desc)
 	return err
 }
 
+// GetUser gets a user from the database during sign in requests
 func GetUser(uname string) *sql.Row {
 	row := db.QueryRow(`SELECT uname, psword FROM userspb WHERE uname = $1;`, uname)
 	return row
 }
 
+// GetOnePic gets a single picture from the database during update requests
 func GetOnePic(uname, photop string) (PicInfo, error) {
 	var p PicInfo
 	rows, err := db.Query(`SELECT * FROM photob 
@@ -48,6 +53,7 @@ func GetOnePic(uname, photop string) (PicInfo, error) {
 	return p, err
 }
 
+// GetPics gets all pictures from the database during read requests
 func GetPics() ([]PicInfo, error) {
 	var p PicInfo
 	var SliceOfP []PicInfo
@@ -71,11 +77,13 @@ func GetPics() ([]PicInfo, error) {
 	return SliceOfP, nil
 }
 
+// DeletePicture deletes a picture from the database
 func DeletePicture(uname, photoPath string) error {
 	_, err := db.Exec("DELETE FROM photob WHERE uname = $1 AND photo = $2", uname, photoPath)
 	return err
 }
 
+// UpdatePic updates a single picture in the database
 func UpdatePic(olduname, oldphotoPath, pname, desc, photop string) error {
 	if photop == "" {
 		_, err := db.Exec(`UPDATE photob 
@@ -90,6 +98,7 @@ func UpdatePic(olduname, oldphotoPath, pname, desc, photop string) error {
 	return err
 }
 
+// SearchPics searches and returns pictures from the database
 func SearchPics(query string) ([]PicInfo, error) {
 	var p PicInfo
 	var SliceOfP []PicInfo
