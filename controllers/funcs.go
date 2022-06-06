@@ -15,6 +15,7 @@ import (
 	"github.com/Emmrys-Jay/my-photo-blog/token"
 )
 
+// ReadPics handles read request in the home page
 func (m *muxVar) ReadPics(w http.ResponseWriter, r *http.Request) {
 
 	var err error
@@ -27,16 +28,28 @@ func (m *muxVar) ReadPics(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	if alreadyLoggedIn(r) {
-		tpl.ExecuteTemplate(w, "index-logged.html", rows)
+
+	// Get the signed in username from the token.
+
+	if uname, ok := alreadyLoggedIn(r); ok {
+		response := struct {
+			Username string
+			Rows     []models.PicInfo
+		}{
+			Username: uname,
+			Rows:     rows,
+		}
+
+		tpl.ExecuteTemplate(w, "index-logged.html", response)
 		return
 	}
 	tpl.ExecuteTemplate(w, "index.html", rows)
 }
 
+// Addpic handles authorized client add pictures requests
 func (m *muxVar) Addpic(w http.ResponseWriter, r *http.Request) {
 
-	if !alreadyLoggedIn(r) {
+	if _, ok := alreadyLoggedIn(r); !ok {
 		http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
 		return
 	}
@@ -114,12 +127,13 @@ func (m *muxVar) Addpic(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tpl.ExecuteTemplate(w, "addpics.html", nil)
+	tpl.ExecuteTemplate(w, "addpics.html", payload)
 }
 
+// UpdatePic handles authorized client update requests
 func (m *muxVar) UpdatePic(w http.ResponseWriter, r *http.Request) {
-	if !alreadyLoggedIn(r) {
-		redirectToView(w, r)
+	if _, ok := alreadyLoggedIn(r); !ok {
+		http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
 		return
 	}
 	var rowStruct models.PicInfo
@@ -185,7 +199,7 @@ func (m *muxVar) UpdatePic(w http.ResponseWriter, r *http.Request) {
 					check(w, err)
 					return
 				}
-				redirectToView(w, r)
+				redirectToHome(w, r)
 				return
 			}
 			defer mf.Close()
@@ -226,7 +240,7 @@ func (m *muxVar) UpdatePic(w http.ResponseWriter, r *http.Request) {
 				check(w, err)
 				return
 			}
-			redirectToView(w, r)
+			redirectToHome(w, r)
 			return
 		}
 	} else {
@@ -237,11 +251,12 @@ func (m *muxVar) UpdatePic(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "update.html", rowStruct)
 }
 
+// DeletePic handles authorized clients delete requests
 func (m *muxVar) DeletePic(w http.ResponseWriter, r *http.Request) {
 
 	//check if user is already logged in
-	if !alreadyLoggedIn(r) {
-		redirectToView(w, r)
+	if _, ok := alreadyLoggedIn(r); !ok {
+		http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
 		return
 	}
 
@@ -293,9 +308,16 @@ func (m *muxVar) DeletePic(w http.ResponseWriter, r *http.Request) {
 		check(w, err)
 		return
 	}
-	redirectToView(w, r)
+	redirectToHome(w, r)
 }
 
+// SearchRequestResponse is the datatype where the data is stored before being sent to the search html template
+type SearchRequestResponse struct {
+	Query string
+	Rows  []models.PicInfo
+}
+
+// SearchPics handles client search requests
 func (m *muxVar) SearchPics(w http.ResponseWriter, r *http.Request) {
 	//Define variable to store search keyword
 	var searchKeyword string
@@ -326,23 +348,31 @@ func (m *muxVar) SearchPics(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Create a new struct so search keyword can be added to the values passed to html template
-	var response = struct {
-		Query string
-		Rows  []models.PicInfo
-	}{
+	response := &SearchRequestResponse{
 		Query: searchKeyword,
 		Rows:  rows,
 	}
 
 	// Decide which html template to render based on if user is logged in or not
-	if alreadyLoggedIn(r) {
-		tpl.ExecuteTemplate(w, "search-result-logged.html", response)
+	// Get username of the signed in user if logged in
+	if uname, ok := alreadyLoggedIn(r); ok {
+
+		ResponseWithUsername := struct {
+			Username string
+			Response *SearchRequestResponse
+		}{
+			Username: uname,
+			Response: response,
+		}
+
+		tpl.ExecuteTemplate(w, "search-result-logged.html", ResponseWithUsername)
 	} else {
 		tpl.ExecuteTemplate(w, "search-result.html", response)
 	}
 
 }
 
-func redirectToView(w http.ResponseWriter, r *http.Request) {
+// rediectToHome redirects a page to the homepage
+func redirectToHome(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
