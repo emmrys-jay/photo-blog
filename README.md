@@ -20,8 +20,40 @@ This a photo-blog which allows a user to login and add pictures via a profile. T
   <li> Password base64-encoded before transit to database
 </ul>
 
-<b>Home Page Background Photo by Philippe Donn</b>: https://www.pexels.com/photo/brown-hummingbird-selective-focus-photography-1133957/
 
 # Home Page
 
 <img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/home.png" alt="home-page">
+
+# Pictures on Home Page
+
+<img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/pictures.png" alt="pictures">
+
+# Search Result Page
+
+<img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/search.png" alt="search">
+
+# Sign In Page
+
+<img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/signin.png" alt="sign in">
+
+# Sign Up Page
+
+<img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/signup.png" alt=""sign up>
+
+# Add Picture Page
+
+<img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/addpics.png" alt="add pictures">
+
+# Backend Features
+
+<ul>
+  <li> Created HTTP server using net/http package
+  <li> Validate request method
+  <li> Implemented Authentication system using JWT
+  <li> Error handling
+  <li> CRUD operations
+  <li> Read database with regex
+  <li> Database server running on Amazom RDS
+</ul>
+
