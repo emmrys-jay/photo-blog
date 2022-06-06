@@ -55,6 +55,7 @@ CREATE TABLE photob ( <br>
 <b>Bad Practice</b>: Storing pictures on a database, though i wanted to try it. But i had to store the filepath of each picture instead of storing the images with blob in the database. I couldn't find enough resources to help me with using golang to save images in mysql blob data-type. 
 
 <h3>To connect to DB instance from psql:</h3>
+
 ```bash
     psql \
     --host=[host-DNS-name] \
