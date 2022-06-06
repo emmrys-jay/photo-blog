@@ -3,6 +3,12 @@
 Type: PostgreSql <br>
 Server: Amazon RDS server <br>
 
+<p>
+<a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html">How to create an Amazon RDS instance?</a></p>
+
+<p>
+<a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html">Connecting to an Amazon RDS instance</a></p>
+
 DB instance identifier: database-1 <br>
 Master username: postgres <br>
 Master password: my_photo_blog-emmrys <br>
