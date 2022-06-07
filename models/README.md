@@ -1,7 +1,7 @@
 # Database Details
 
-Type: PostgreSql <br>
-Server: Amazon RDS server <br>
+<b>Type:</b> PostgreSql <br>
+<b>Server:</b> Amazon RDS server <br>
 
 <p>
 <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateDBInstance.html">How to create an Amazon RDS instance?</a></p>
@@ -9,11 +9,11 @@ Server: Amazon RDS server <br>
 <p>
 <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.Connect.html">Connecting to an Amazon RDS instance</a></p>
 
-DB instance identifier: database-1 <br>
-Master username: postgres <br>
-Master password: my_photo_blog-emmrys <br>
-Security group name: my_blog-secgroup <br>
-Connection name: my-photoblog <br>
+<b>DB instance identifier:</b> database-1 <br>
+<b>Master username:</b> postgres <br>
+<b>Master password:</b> my_photo_blog-emmrys <br>
+<b>Security group name:</b> my_blog-secgroup <br>
+<b>Connection name:</b> my-photoblog <br>
 
 <h3>Processes to take note of </h3>
 
@@ -31,7 +31,7 @@ Two Tables/Schemas:
     <li> photoblog (stores photos and description)
 </ul>
 
-<h5>Userspb Table SQL code</h5>
+<h3>Userspb Table SQL code</h3>
 
 CREATE TABLE userspb ( <br>
     uname VARCHAR PRIMARY KEY NOT NULL, <br>
@@ -39,7 +39,7 @@ CREATE TABLE userspb ( <br>
     psword VARCHAR <br>
 ); <br>
 
-<h5>Photob Table SQL code</h5>
+<h3>Photob Table SQL code</h3>
 
 CREATE TABLE photob ( <br>
     id BIGSERIAL, <br>
@@ -58,7 +58,6 @@ CREATE TABLE photob ( <br>
 </ul>
 
 # Note
-<b>Bad Practice</b>: Storing pictures on a database, though i wanted to try it. But i had to store the filepath of each picture instead of storing the images with blob in the database. I couldn't find enough resources to help me with using golang to save images in mysql blob data-type. 
 
 <h3>To connect to DB instance from psql:</h3>
 
@@ -70,4 +69,4 @@ CREATE TABLE photob ( <br>
     --password 
 ```
 
-<b>NB:</b> The password flag on the CLI does not need any values. The CLI will prompt for a password after running the command. Specify "--no-password" if the DB does not need authentication.
+The password flag on the CLI does not need any values. The CLI will prompt for a password after running the command. Specify "--no-password" if the DB does not need authentication.
