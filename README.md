@@ -1,10 +1,25 @@
 # my-photo-blog
-My first full web project with a PostgreSql database runnning on Amazon RDS.
+A Photo Blog which you can seamlessly deploy locally
 
-# Project Description
-This a photo-blog which allows a user to login and add pictures via a profile. The server path of each picture is save to the database along with the picture title, description and username. Picture paths are queried from the database and used to get the served pictures on the server. 
+## Project Description
+This a photo blog which allows a user to login and add pictures via a profile. The server path of each picture is saved to the postgres database along with the picture's title, description and username of its author. Picture paths are queried from the database and used to get the served pictures on the server. 
 
-# Features
+## How to Set Up this Project Locally
+- Ensure docker and docker-compose is installed. Run this command to confirm its installation:
+```shell
+docker -v
+docker-compose -v
+```
+- Clone this project from git repository using 
+```shell
+git clone https://github.com/Emmrys-Jay/photo-blog.git
+```
+- Run this command in project directory
+```shell
+docker-compose up --build
+```
+
+## Features
 <ul>
   <li> User Signup
   <li> User Login
@@ -13,50 +28,49 @@ This a photo-blog which allows a user to login and add pictures via a profile. T
   <li> View all pictures on a general home-page
   <li> Save pictures on the server
   <li> Picture path on the server saved to a postgresql database
-  <li> PostgreSQL database server running on AWS RDS service
   <li> Token authentication with JWT
-  <li> Search database with regular enpressions
-  <li> Create, Read, update and delete (CRUD) from database
+  <li> Search database with regular expressions
+  <li> Create, Read, update and delete (CRUD) pictures from database
   <li> Password base64-encoded before transit to database
 </ul>
 
 
-# Home Page
+## Home Page
 
 <img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/home.png" alt="home-page">
 
-# Pictures on Home Page
+## Pictures on Home Page
 
 <img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/pictures.png" alt="pictures">
 
-# Search Result Page
+## Search Result Page
 
 <img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/search.png" alt="search">
 
-# Sign In Page
+## Sign In Page
 
 <img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/signin.png" alt="sign in">
 
-# Sign Up Page
+## Sign Up Page
 
 <img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/signup.png" alt="sign up">
 
-# Add Picture Page
+## Add Picture Page
 
 <img src="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/views/screenshots/addpics.png" alt="add pictures">
 
-# Backend Features
+## Backend Features
 
 <ul>
   <li> Created HTTP server using net/http package
   <li> Validate request method
-  <li> Implemented Authentication system using JWT
+  <li> Authentication system using JWT
   <li> Error handling
   <li> CRUD operations
   <li> Read database with regex
-  <li> Database server running on Amazom RDS
+  <li> Database server running on Amazon RDS
 </ul>
 
 <p>Home Page Background Photo by <a href="https://www.pexels.com/photo/brown-hummingbird-selective-focus-photography-1133957/">Philippe Donn</a> </p>
-
+<p>HTML and CSS used for this project was gotten from <a href="https://bootstrapmade.com/mentor-free-education-bootstrap-theme/">bootstrapmade.com</a> </p>
 <b>NB:</b> Instruction on setting up an Amazon RDS instance can be found <a href="https://github.com/Emmrys-Jay/my-photo-blog/blob/main/models/README.md">here</a>
