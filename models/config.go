@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"fmt"
+	"os"
 
 	_ "github.com/lib/pq"
 )
@@ -11,27 +12,31 @@ func ConnectDB() {
 
 	// Connect to remote database
 	// Edit details when connecting to your PostgreSQL server instance
-	db, err = sql.Open("postgres", "user=postgres dbname=myphotoblog password=password host=my-photo-blog_postgres-server_1 sslmode=disable")
+	databaseString := "user=" + os.Getenv("POSTGRES_USER") + " dbname=" + os.Getenv("POSTGRES_DB") + " password=" + os.Getenv("POSTGRES_PASSWORD") + " host=" + os.Getenv("DATABASE_HOST") + " sslmode=disable"
+	db, err = sql.Open("postgres", databaseString)
 	if err != nil {
-		panic(err)
+		fmt.Println("While connecting to database, got error: ", err)
+		os.Exit(1)
 	}
 
 	// Ping database to see if connection has been successfully established
 	err = db.Ping()
 	if err != nil {
-		panic(err)
+		fmt.Println("While pinging database, got error: ", err)
+		os.Exit(1)
 	}
 
-	err = CreateDatabase(db)
+	err = CreateTables(db)
 	if err != nil {
-		panic(err)
+		fmt.Println("While creating database schemas, got error: ", err)
+		os.Exit(1)
 	}
 
 	fmt.Println("you connected to database successfully")
 }
 
-func CreateDatabase(db *sql.DB) error {
-	userspbQuery := `CREATE TABLE userspb (
+func CreateTables(db *sql.DB) error {
+	userspbQuery := `CREATE TABLE IF NOT EXISTS userspb (
 						uname VARCHAR PRIMARY KEY NOT NULL,
 						email VARCHAR UNIQUE NOT NULL,
 						psword VARCHAR
@@ -41,7 +46,7 @@ func CreateDatabase(db *sql.DB) error {
 		return err
 	}
 
-	photobQuery := `CREATE TABLE photob (
+	photobQuery := `CREATE TABLE IF NOT EXISTS photob (
 						id BIGSERIAL,
 						uname VARCHAR,
 						ptitle VARCHAR,

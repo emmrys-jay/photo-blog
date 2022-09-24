@@ -130,7 +130,7 @@ func (m *muxVar) Addpic(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "addpics.gohtml", payload)
 }
 
-// UpdatePic handles authorized client update requests
+// UpdatePic handles authorized clients update request
 func (m *muxVar) UpdatePic(w http.ResponseWriter, r *http.Request) {
 	if _, ok := alreadyLoggedIn(r); !ok {
 		http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)

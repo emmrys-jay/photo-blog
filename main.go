@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/Emmrys-Jay/my-photo-blog/controllers"
@@ -21,5 +23,7 @@ func main() {
 	mux.HandleFunc("/update", m.UpdatePic)
 	mux.HandleFunc("/delete", m.DeletePic)
 	mux.HandleFunc("/search", m.SearchPics)
-	http.ListenAndServe(":8080", mux)
+
+	fmt.Println("Server now listening on port: 8080")
+	log.Fatal(http.ListenAndServe(":8080", mux))
 }

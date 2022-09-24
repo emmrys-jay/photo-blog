@@ -1,18 +1,28 @@
-version: '3'
+version: '3.3'
 services:
   postgres-server:
     image: 'postgres'
+    container_name: postgres-server
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: postgres
-      POSTGRES_DB: myphotoblog
-      DATABASE_HOST: my-photo-blog_postgres-server_1
+      #POSTGRES_DB default database to be created during container creation
+      POSTGRES_DB: photoblog
   photo-blog: 
     build: .
     ports:
-      - "4000:8080"
+      - "8080:8080"
+    container_name: photoblog
     restart: on-failure
     depends_on: 
-      - 'postgres-server'
+      - postgres-server
     volumes:
       - .:/usr/app
+    environment:
+      POSTGRES_PASSWORD: password
+      #POSTGRES_USER must be same as POSTGRES_USER env variable above
+      POSTGRES_USER: postgres
+      #POSTGRES_DB must be the same as POSTGRES_DB env variable above
+      POSTGRES_DB: photoblog
+      #DATABASE_HOST must be same as postgres container_name above
+      DATABASE_HOST: postgres-server
