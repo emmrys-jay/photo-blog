@@ -2,12 +2,17 @@ package main
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	"log"
 	"net/http"
 
 	"github.com/Emmrys-Jay/my-photo-blog/controllers"
 	"github.com/Emmrys-Jay/my-photo-blog/models"
 )
+
+func init() {
+	_ = godotenv.Load("load.env")
+}
 
 func main() {
 	models.ConnectDB()
